@@ -2,35 +2,36 @@
 // Estimate the root (or x) of a given linear function, that is, f(x) = 0 using intervall bisection.
 #include <iostream>
 #include <stdio.h>
-#include<cmath>
+#include <cmath>
 
 /* Given: increasing linear function to test f(x)=32*x-1 */
 float exampleIncreasingLinearFunc(float x)
 {
-    return 32 * x - 1;
+  return 32 * x - 1;
 }
 
 /* Given: decreasing linear function to test f(x)=-32*x-1 */
 float exampleDecreasingLinearFunc(float x)
 {
-    return -32 * x - 1;
+  return -32 * x - 1;
 }
 
 /* TODO: 1a)
 Rounds a float value to n decimal places. E.g. val=1.555, n=2 returns 1.56*/
 float roundValToNDecimals(float val, unsigned int n)
-{
-    //TODO: 1a)
-    return 0.0f;
+{ 
+  float decimalShift = std::pow((float)10, (float)n);
+  return (float)std::round(val * decimalShift) / decimalShift;
 }
 
 /* TODO: 1b)
- Returns true if the absolute difference of x1 and x2 is smaller or equal than a given epsilon,
-otherwise returns false. Default epsilon checks for 5 decimal precision.*/
-bool isAlmostEqual(float x1, float x2, float epsilon = 1.0e-5)
+ Returns true if the absolute difference of x1 and x2 is smaller or equal than 
+a given epsilon, otherwise returns false. Default epsilon
+checks for 5 decimal precision.*/
+bool isAlmostEqual(float x1, float x2, float epsilon = 1.0e-5f)
 {
-    //TODO: 1b)
-    return false;
+  if(std::abs(x1 - x2) <= epsilon) return true;
+  return false;
 }
 
 /* TODO: 1c-f)
@@ -38,10 +39,30 @@ Estimates the root, the x, of the linear function that is f(x)=0 within the spec
 If the root is equal to the interval bounds or the midpoint it returns the corresponding x-value.
 If the root is estimated (the intervall becomes small enough) the resulting x-value is rounded to n decimal places. 
 If linear function in the specified interval does not have a root, it returns NAN. */
-float estimateFunctionRoot(float (*linearFunc)(float), float xLower, float xUpper, unsigned int nDecimals)
+float estimateFunctionRoot(float (*linearFunc)(float),
+                           float xLower,
+                           float xUpper,
+                           unsigned int nDecimals)
 {
-    //TODO: 1c-f)
-    return 0.0f;
+  float xMiddle, yUpper, yLower, yMiddle;
+  while(!isAlmostEqual(xLower, xUpper))
+  {
+    xMiddle = (xLower + xUpper) / 2.0f;
+    yUpper  = linearFunc(xUpper);
+    yLower  = linearFunc(xLower);
+    yMiddle = linearFunc(xMiddle);
+
+    /* Corner Cases */
+    if(yUpper == 0)  return roundValToNDecimals(xUpper, nDecimals);
+    if(yLower == 0)  return roundValToNDecimals(xLower, nDecimals);
+    if(yMiddle == 0) return roundValToNDecimals(yMiddle, nDecimals);
+    if(yUpper * yLower > 0) return nanf("");
+
+    /* Intervall Biscection */
+    if(0 > yUpper * yMiddle) xLower = xMiddle;
+    else xUpper = xMiddle;
+  }
+  return roundValToNDecimals(xUpper, nDecimals);
 }
 
 /* Calls estimateFunctionRoot of increasing example function with the specified interval [lowerBound; upperBound] and prints out the result. */
