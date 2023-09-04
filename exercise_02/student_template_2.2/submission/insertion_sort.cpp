@@ -29,11 +29,12 @@ void printArray(int arr[], int nElements)
     cout << endl;
 }
 
-/// Insertion sort algorithm sorts given integer array ascending with n elements.
+// Insertion sort algorithm sorts given integer
+// array ascending with n elements.
 void insertionSort(int arr[], int nElements)
 {
-    // TODO: implement insertion sort with the use of the std::swap function
-
+  for(int i = 0, j = 1; i < nElements; i++, j = i)
+    while(arr[j] < arr[j - 1] && j != 0) std::swap(arr[j], arr[j - 1]), j--;
 }
 
 /* Test insertion sort with two arrays containing 5000 elements ascending and descending and
@@ -42,6 +43,8 @@ void testInsertionSort()
 {
     int* ascInsertionTest = generateArray(1, 1);
     int* descInsertionTest = generateArray(num_array_elements, -1);
+
+    //printArray(descInsertionTest, num_array_elements);
 
     const time_point start = std::chrono::high_resolution_clock::now();
     insertionSort(ascInsertionTest, num_array_elements);
@@ -55,6 +58,8 @@ void testInsertionSort()
     cout << "Insertion sorting time for n = " << num_array_elements << ":" << endl;
     cout << "Sorted ascending in " << ascInsertionTime << " ms." << endl;
     cout << "Sorted descending in " << descInsertionTime << " ms." << endl;
+
+    //printArray(descInsertionTest, num_array_elements);
 
     delete[] ascInsertionTest;
     delete[] descInsertionTest;

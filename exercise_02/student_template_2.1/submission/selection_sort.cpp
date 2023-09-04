@@ -29,11 +29,14 @@ void printArray(int arr[], int nElements)
     cout << endl;
 }
 
-/// Selection sort algorithm sorts given integer array ascending with n elements.
+// Selection sort algorithm sorts given integer array
+// ascending with n elements.
 void selectionSort(int arr[], int nElements)
 {
-    // TODO: implement selection sort with the use of the std::swap function
-
+  int min = 0;
+  for(int i = 0; i < nElements - 1; std::swap(arr[i], arr[min]), i++, min = i)
+    for(int j = i + 1; j < nElements; j++)
+      if(arr[j] < arr[min]) min = j;
 }
 
 /* Test selection sort with two arrays containing 5000 elements ascending and descending and
@@ -55,6 +58,8 @@ void testSelectionSort()
     cout << "Selection sorting time for n = " << num_array_elements << ":" << endl;
     cout << "Sorted ascending in " << ascSelectionTime << " ms." << endl;
     cout << "Sorted descending in " << descSelectionTime << " ms." << endl;
+
+    printArray(ascSelectionTest, num_array_elements);
 
     delete[] ascSelectionTest;
     delete[] descSelectionTest;
