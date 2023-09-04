@@ -58,7 +58,7 @@ float estimateFunctionRoot(float (*linearFunc)(float),
     /* Corner Cases */
     if(yUpper == 0)  return roundValToNDecimals(xUpper, nDecimals);
     if(yLower == 0)  return roundValToNDecimals(xLower, nDecimals);
-    if(yMiddle == 0) return roundValToNDecimals(yMiddle, nDecimals);
+    if(yMiddle == 0) return roundValToNDecimals(xMiddle, nDecimals);
     if(yUpper * yLower > 0) return nanf("");
 
     /* Intervall Biscection */
