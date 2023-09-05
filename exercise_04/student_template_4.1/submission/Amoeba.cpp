@@ -48,5 +48,5 @@ Food *Amoeba::clone() const {
 void Amoeba::eat(double health, double dna) {
   this->health += health; 
   dna_level += dna;
-  if(dna_level >= dna_level_th) dna_level_th *= 2;
+  if(dna_level >= dna_level_th) dna_level_th *= 2.0, dna_level = 0.0;
 }
