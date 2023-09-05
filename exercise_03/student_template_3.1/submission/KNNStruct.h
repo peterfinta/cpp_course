@@ -64,7 +64,7 @@ float DistanceManhattan(const DYNPoint &A, const DYNPoint &B)
 {
   if(A.data.size() != B.data.size()) return -1.0f;
   float res = 0.0f;
-  for(std::vector<float>::const_iterator itA = A.data.begin(), itB = B.data.begin();
+  for(auto itA = A.data.begin(), itB = B.data.begin();
       itA != A.data.end(); ++itA, ++itB) res += std::abs(*itA + *itB);
 
 	return res / (float)A.data.size();
@@ -75,8 +75,7 @@ float DistanceEuclid(const DYNPoint &A, const DYNPoint &B)
   if(A.data.size() != B.data.size()) return -1.0f;
   float res = 0.0f;
   for(auto itA = A.data.begin(), itB = B.data.begin();
-      itA != A.data.end(); ++itA, ++itB) 
-    res += std::pow(*itA, 2.0f) + std::pow(*itB, 2.0f);
+      itA != A.data.end(); ++itA, ++itB) res += std::pow(*itA - *itB, 2.0f);
 
 	return std::sqrt(res / (float)A.data.size());
 }
