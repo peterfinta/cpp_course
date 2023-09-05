@@ -12,9 +12,13 @@ public:
 
   virtual Food *clone() const override;
 
+  // print variable names and values
+  void print_header() override;
+  void print() override;
+
   void eat(double health, double dna);
 
 protected:
   double dna_level{};
-  //TODO: task f)
+  double dna_level_th{};//TODO: task f)
 };
