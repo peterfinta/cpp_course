@@ -1,5 +1,7 @@
 #pragma once
 
+// Matrikel Nr.: 5425888
+
 // own classes
 #include "Amoeba.h"
 #include "DeadCell.h"
@@ -48,7 +50,7 @@ bool combat(Amoeba *player, Food *enemy) {
                       {
                         double damage = random_value() * enemy->get_power() 
                          - random_value() * defence;
-                        if(damage > 0) health -= damage;i
+                        if(damage > 0) health -= damage;
                       }
                       ); // Your Code here
 
