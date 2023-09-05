@@ -48,7 +48,8 @@ float estimateFunctionRoot(float (*linearFunc)(float),
                            unsigned int nDecimals)
 {
   float xMiddle, yUpper, yLower, yMiddle;
-  while(!isAlmostEqual(xLower, xUpper))
+
+  do 
   {
     xMiddle = (xLower + xUpper) / 2.0f;
     yUpper  = linearFunc(xUpper);
@@ -64,7 +65,8 @@ float estimateFunctionRoot(float (*linearFunc)(float),
     /* Intervall Biscection */
     if(0 > yUpper * yMiddle) xLower = xMiddle;
     else xUpper = xMiddle;
-  }
+  } while(!isAlmostEqual(xLower, xUpper));
+
   return roundValToNDecimals(xUpper, nDecimals);
 }
 
@@ -118,4 +120,19 @@ void testEstimateFunctionRoot()
 
     // Test 1f) Test decreasing function as well
     testAndPrintDecreasing(-1.0f, 1.0f);
+
+    // Test 1f) Test decreasing function as well
+    testAndPrintDecreasing(-0.03125, 0.0f);
+
+    // Test 1f) Test decreasing function as well
+    testAndPrintDecreasing(-0.0313f, 0.0f);
+
+    // Test 1f) Test decreasing function as well
+    testAndPrintDecreasing(1, 1);
+
+    // Test 1f) Test decreasing function as well
+    testAndPrintDecreasing(1, -1);
+
+    // Test 1f) Test decreasing function as well
+    testAndPrintDecreasing(-0.0f, -0.0001f);
 }
