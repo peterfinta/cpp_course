@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <map>
 #include <cmath>
+#include <algorithm>
 
 
 struct DYNPoint 
@@ -52,9 +54,27 @@ struct KNN
 
 		if (k && function_ptr_Distance && trainingData.size())
     {
+      std::vector<std::pair<float, int>> distancesAndLabels{};
+      for(auto it = trainingData.begin(); it != trainingData.end(); it++)
+      {
+        distancesAndLabels.emplace_back(it->second
+                                       ,function_ptr_Distance(it->first, A));
+      }
 
+      std::sort(distancesAndLabels.begin()
+               ,distancesAndLabels.end()
+               ,[](auto a, auto b){return a.first < b.first;});
+
+      std::multimap<int, int> labelsMap{};
+
+      for(int i = 0; i < k; i++)
+      {
+        int idx = distancesAndLabels.at(i).second;
+        labelsMap.emplace(idx, 1);
+        if(labelsMap.count(idx) > labelsMap.count(class_label))
+          class_label = idx; 
+      }
 			// STUDENT TODO: your code
-
 		}
 		return class_label;
 	}
@@ -84,6 +104,14 @@ void createDataset(std::vector<std::pair<DYNPoint, unsigned int>> &dataset, cons
 				const unsigned int point_size, const int minimum, const int maximum) {
 
 	if (amount > 0 && point_size>0 && minimum <= maximum) {
+    for(unsigned i = 0; i < amount; i++)
+    {
+      std::pair<DYNPoint, unsigned> newData(DYNPoint::createRandomPoint(point_size
+                                                                       ,minimum
+                                                                       ,maximum)
+                                           , class_label);
+      dataset.push_back(newData);
+    }
 
 	// STUDENT TODO: your code
 
