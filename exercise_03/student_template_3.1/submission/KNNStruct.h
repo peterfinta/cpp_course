@@ -19,7 +19,6 @@ struct DYNPoint
   {
 		DYNPoint p;
     float resizeFactor = (float)(maximum - minimum) / (float)RAND_MAX;
-    std::cout << "RAND_MAX = " << RAND_MAX << std::endl;
 		if (size > 0 && minimum <= maximum)
     {			
       for(int i = 0; i < size; i++)
