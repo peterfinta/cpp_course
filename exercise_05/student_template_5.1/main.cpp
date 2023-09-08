@@ -41,10 +41,10 @@ int main() {
   std::cout << "Book3 has " << hist3.size() << " unique words."
             << "\n\n";
 
-  /* TODO: 5.1.b) Uncomment this after implmenting 'most_common_words()'
+  /* TODO: 5.1.b) Uncomment this after implmenting 'most_common_words()' */
   // most common words in each book
   std::cout << "Most common words: book: probability word\n";
-  for (const auto &pair : hist0.most_common_words(5)) {
+  for (const auto &pair : hist0.most_common_words(50)) {
     std::cout << "Book0: " << pair.first << " " << pair.second << "\n";
   }
   std::cout << "\n";
@@ -60,7 +60,7 @@ int main() {
     std::cout << "Book3: " << pair.first << " " << pair.second << "\n";
   }
   std::cout << "\n";
-  */
+  
 
   /* TODO 5.1.c) Uncomment this after implementing 'dissimilarity()'
   // similarity between book0 and book1

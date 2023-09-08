@@ -66,6 +66,7 @@ struct KNN
 
       std::multimap<int, int> labelsMap{};
 
+      class_label = distancesAndLabels.at(0).second;
       for(int i = 0; i < k; i++)
       {
         int idx = distancesAndLabels.at(i).second;
