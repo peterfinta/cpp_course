@@ -42,7 +42,7 @@ double Histogram::probability(const std::string &word) const {
 std::vector<std::pair<double, std::string>> Histogram::most_common_words(unsigned n_words) const
 {
   std::multimap<double, std::string> sortedHistogram;
-  auto res = new std::vector<std::pair<double, std::string>>{};
+  std::vector<std::pair<double, std::string>> res{};
 
   for(std::map<std::string, double>::const_iterator it = histogram.begin();
       it != histogram.end(); it++)
@@ -50,9 +50,9 @@ std::vector<std::pair<double, std::string>> Histogram::most_common_words(unsigne
 
   for(std::multimap<double, std::string>::reverse_iterator it = sortedHistogram.rbegin();
       it != sortedHistogram.rend() && n_words != 0; it++, n_words--)
-    res->push_back(*it);
+    res.push_back(*it);
 
-  return *res;
+  return res;
 }
 
 // TODO 5.1.c
