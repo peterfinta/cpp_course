@@ -6,6 +6,7 @@
 #include <utility>
 #include <vector>
 #include <iostream>
+#include <cmath>
 
 Histogram::Histogram(const std::vector<std::string> &words) {
   // TODO 5.1.a) make sure the histogram is normalized when the constructor is done
@@ -37,6 +38,7 @@ double Histogram::probability(const std::string &word) const {
   return 0.0;
 }
 
+// TODO 5.1.b
 std::vector<std::pair<double, std::string>> Histogram::most_common_words(unsigned n_words) const
 {
   std::multimap<double, std::string> sortedHistogram;
@@ -53,9 +55,37 @@ std::vector<std::pair<double, std::string>> Histogram::most_common_words(unsigne
   return *res;
 }
 
-
-
-
-// TODO 5.1.b
 // TODO 5.1.c
+double Histogram::dissimilarity(const Histogram &other) const
+{
+  double acc = 0.0; 
+  size_t count = 0;
+  for(auto it = histogram.begin(); it != histogram.end(); it++)
+  {
+    if(other.contains((*it).first)) 
+    {
+      count += 1;
+      acc += std::abs(probability((*it).first) 
+                       - other.probability((*it).first));
+    }
+  }
+
+  double A = static_cast<double>(size());
+  double B = static_cast<double>(other.size());
+  double S = static_cast<double>(count);
+
+  return (1.0 - (S / A)) + (1.0 - (S / B)) + acc;
+}
+
 // TODO 5.1.d
+size_t Histogram::closest(const std::vector<Histogram> &candidates) const
+{
+  std::multimap<double, size_t> orderedCandidates;
+  size_t idx = 0;
+  for(auto it = candidates.begin(); it != candidates.end(); it++, idx++)
+  {
+    orderedCandidates.emplace(dissimilarity(*it), idx);
+  }
+  return orderedCandidates.begin()->second;
+}
+

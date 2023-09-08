@@ -2,6 +2,7 @@
 
 #include "transformations.h"
 #include "operations.h"
+#include "point3d.h"
 
 #include <stdexcept>
 
@@ -81,4 +82,22 @@ Shape Cube::clone_impl() const
 
 bool Cube::isInside_impl(const Point3D& p) const {
     return getBounds().contains(p);
+}
+
+Shape Sphere::clone_impl() const {
+    return {std::make_shared<Sphere>()};
+}
+
+bool Sphere::isInside_impl(const Point3D& p) const {
+    Point3D zero{};
+    return (1 >= distance(p, zero));
+}
+
+Shape Cylinder::clone_impl() const {
+    return {std::make_shared<Cylinder>()};
+}
+
+bool Cylinder::isInside_impl(const Point3D& p) const {
+    Point3D zeroPlane(0.0f, 0.0f, p.z);
+    return (p.z >= -1.0f && p.z <= 1.0f) && distance(p, zeroPlane);
 }
