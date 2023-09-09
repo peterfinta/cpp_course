@@ -15,6 +15,11 @@ int main() {
     // My Test    
     Sphere sphere{};
     Cube cube{};
+    And cubeAndSphere{cube, sphere};
+    Or cubeOrSphere{cube, sphere};
+    Not NotSphere{sphere};
+    Cylinder cylinder{};
+
     Point3D point_1{};
     Point3D point_2{};
 
@@ -24,7 +29,10 @@ int main() {
 
     std::cout << sphere.isInside(point_1) << ", " << sphere.isInside(point_2) << std::endl;
     std::cout << cube.isInside(point_1) << ", " << cube.isInside(point_2) << std::endl;
-
+    std::cout << cylinder.isInside(point_1) << ", " << cylinder.isInside(point_2) << std::endl;
+    std::cout << cubeAndSphere.isInside(point_1) << ", " << cubeAndSphere.isInside(point_2) << std::endl;
+    std::cout << cubeOrSphere.isInside(point_1) << ", " << cubeOrSphere.isInside(point_2) << std::endl;
+    std::cout << NotSphere.isInside(point_1) << ", " << NotSphere.isInside(point_2) << std::endl;
 
     // until implemented in task 6.4, this will throw an exception
     try {

@@ -44,7 +44,7 @@ int main() {
   /* TODO: 5.1.b) Uncomment this after implmenting 'most_common_words()' */
   // most common words in each book
   std::cout << "Most common words: book: probability word\n";
-  for (const auto &pair : hist0.most_common_words(50)) {
+  for (const auto &pair : hist0.most_common_words(5)) {
     std::cout << "Book0: " << pair.first << " " << pair.second << "\n";
   }
   std::cout << "\n";
@@ -66,6 +66,8 @@ int main() {
   // similarity between book0 and book1
   std::cout << "Difference between book0 and book1: " << hist0.dissimilarity(hist1) << "\n";
   std::cout << "Difference between book0 and book3: " << hist0.dissimilarity(hist3) << "\n\n";
+  std::cout << "Difference between book3 and book1: " << hist3.dissimilarity(hist1) << "\n";
+  std::cout << "Difference between book3 and book2: " << hist3.dissimilarity(hist2) << "\n\n";
 
   /* TODO: 5.1.d) Uncomment this after implementing 'closest()' */
   // most similar histograms

@@ -12,34 +12,44 @@ public:
     Shape sub_shape_a, sub_shape_b;
 
 private:
-    /// by default, operations between two shapes have a result that is contained within their combined bounds
+    /// by default, operations between two shapes have a
+    //result that is contained within their combined bounds
     AABB getBounds_impl() const override;
 };
 
 class And final : public Operation {
-protected:
-    And(const Shape& shape_a, const Shape& shape_n);
+public:
+    And(const Shape& shape_a, const Shape& shape_b) 
+      : Operation(shape_a, shape_b){};
 private:
     Shape clone_impl() const override;
-    bool isInside_impl(const Point3D &p) const override;
+    bool isInside_impl(const Point3D& p) const override;
 };
 
 class Or final : public Operation {
+public:
+    Or(const Shape& shape_a, const Shape& shape_b) 
+      : Operation(shape_a, shape_b){};
 private:
     Shape clone_impl() const override;
-    bool isInside_impl(const Point3D &p) const override;
+    bool isInside_impl(const Point3D& p) const override;
 };
 
 class Xor final : public Operation {
+public:
+    Xor(const Shape& shape_a, const Shape& shape_b) 
+      : Operation(shape_a, shape_b){};
 private:
     Shape clone_impl() const override;
-    bool isInside_impl(const Point3D &p) const override;
+    bool isInside_impl(const Point3D& p) const override;
 };
 
-//class Not final : public Operation {
-//protected:
-//    Not(const Shape& shape_a);
-//private:
-//    Shape clone_impl() const override;
-//    bool isInside_impl(const Point3D &p) const override;
-//};
+class Not final : public Operation {
+public:
+    Not(const Shape& shape_a) 
+      : Operation(shape_a, shape_a){};
+private:
+    Shape clone_impl() const override;
+    bool isInside_impl(const Point3D& p) const override;
+};
+

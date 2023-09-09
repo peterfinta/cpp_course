@@ -80,11 +80,6 @@ struct Point3D {
     float norm() const {
         return std::sqrt(x*x + y*y + z*z);
     }
-
-    /// compute the L1 norm (the distance to [0.0, 0.0, 0.0])
-    float normL1() const {
-        return (std::abs(x) + std::abs(y) + std::abs(z));
-    }
 };
 
 // interoperability with floats

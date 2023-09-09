@@ -4,6 +4,7 @@
 #include "operations.h"
 #include "point3d.h"
 
+#include <cmath>
 #include <stdexcept>
 
 Shape::Shape(std::shared_ptr<Shape>&& shape) noexcept
@@ -89,8 +90,7 @@ Shape Sphere::clone_impl() const {
 }
 
 bool Sphere::isInside_impl(const Point3D& p) const {
-    Point3D zero{};
-    return (1 >= distance(p, zero));
+    return (1.0f >= p.norm());
 }
 
 Shape Cylinder::clone_impl() const {
@@ -98,6 +98,39 @@ Shape Cylinder::clone_impl() const {
 }
 
 bool Cylinder::isInside_impl(const Point3D& p) const {
-    Point3D zeroPlane(0.0f, 0.0f, p.z);
-    return (p.z >= -1.0f && p.z <= 1.0f) && distance(p, zeroPlane);
+    float radius = std::sqrt(p.x*p.x + p.y*p.y);
+    return std::abs(p.z) <= 1.0f && radius <= 1.0f;
+}
+
+Shape Octahedron::clone_impl() const {
+    return {std::make_shared<Octahedron>()};
+}
+
+bool Octahedron::isInside_impl(const Point3D& p) const {
+    return std::abs(p.x) + std::abs(p.y) + std::abs(p.z) <= 1.0f;
+}
+
+
+Shape Shape::operator&(const Shape& other) const{
+    return {(And(*this, other)).clone()};
+}
+
+Shape Shape::operator|(const Shape& other) const{
+    return {(Or(*this, other)).clone()};
+}
+
+Shape Shape::operator^(const Shape& other) const{
+    return {(Xor(*this, other)).clone()};
+}
+
+Shape Shape::operator!() const{
+    return {(Not(*this)).clone()};
+}
+
+Shape Shape::operator+(const Shape& other) const{
+    return (*this & other);
+}
+
+Shape Shape::operator-(const Shape& other) const{
+    return (*this & (!other));
 }
