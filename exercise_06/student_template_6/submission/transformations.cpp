@@ -75,22 +75,22 @@ AABB Rotated::getBounds_impl() const {
     Point3D newMax = sub_shape.getBounds().max;
     switch(axis) {
         case Axis::X:
-            newMin.y = cos*oldMin.y + sin*oldMin.z;
-            newMin.z = cos*oldMin.z + sin*oldMin.y;
-            newMax.y = cos*oldMax.y + sin*oldMax.z;
-            newMax.z = cos*oldMax.z + sin*oldMax.y;
+            newMin.y = std::abs(cos*oldMin.y) + std::abs(sin*oldMin.z);
+            newMin.z = std::abs(cos*oldMin.z) + std::abs(sin*oldMin.y);
+            newMax.y = std::abs(cos*oldMax.y) + std::abs(sin*oldMax.z);
+            newMax.z = std::abs(cos*oldMax.z) + std::abs(sin*oldMax.y);
             break;
         case Axis::Y:
-            newMin.z = cos*oldMin.z + sin*oldMin.x;
-            newMin.x = cos*oldMin.x + sin*oldMin.z;
-            newMax.z = cos*oldMax.z + sin*oldMax.x;
-            newMax.x = cos*oldMax.x + sin*oldMax.z;
+            newMin.z = std::abs(cos*oldMin.z) + std::abs(sin*oldMin.x);
+            newMin.x = std::abs(cos*oldMin.x) + std::abs(sin*oldMin.z);
+            newMax.z = std::abs(cos*oldMax.z) + std::abs(sin*oldMax.x);
+            newMax.x = std::abs(cos*oldMax.x) + std::abs(sin*oldMax.z);
             break;
         case Axis::Z:
-            newMin.x = cos*oldMin.x + sin*oldMin.y;
-            newMin.y = cos*oldMin.y + sin*oldMin.x;
-            newMax.x = cos*oldMax.x + sin*oldMax.y;
-            newMax.y = cos*oldMax.y + sin*oldMax.x;
+            newMin.x = std::abs(cos*oldMin.x) + std::abs(sin*oldMin.y);
+            newMin.y = std::abs(cos*oldMin.y) + std::abs(sin*oldMin.x);
+            newMax.x = std::abs(cos*oldMax.x) + std::abs(sin*oldMax.y);
+            newMax.y = std::abs(cos*oldMax.y) + std::abs(sin*oldMax.x);
             break;
     }
     return AABB{newMin, newMax};
