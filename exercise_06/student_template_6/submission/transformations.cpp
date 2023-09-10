@@ -39,12 +39,8 @@ bool Scaled::isInside_impl(const Point3D& p) const {
 }
 
 AABB Scaled::getBounds_impl() const {
-    Point3D boundsOffset = (sub_shape.getBounds().min 
-                          + sub_shape.getBounds().max) * Point3D(0.5f);
-    return AABB{(sub_shape.getBounds().min - boundsOffset) * scale
-                         + boundsOffset,
-                (sub_shape.getBounds().max - boundsOffset) * scale
-                         + boundsOffset};
+    return AABB{(sub_shape.getBounds().min) * scale,
+                (sub_shape.getBounds().max) * scale};
 }
 
 Shape Translated::clone_impl() const {
@@ -99,5 +95,6 @@ AABB Rotated::getBounds_impl() const {
             newMax.y = cos*oldMax.y + sin*oldMax.x;
             break;
     }
-    return AABB{newMin + boundsOffset, newMax + boundsOffset};
+    return AABB{newMin + rotate(boundsOffset, axis, angle), 
+                newMax + rotate(boundsOffset, axis, angle)};
 }
