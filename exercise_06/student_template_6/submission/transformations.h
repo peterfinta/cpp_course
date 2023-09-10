@@ -39,9 +39,10 @@ private:
 
 class Rotated final : public Transformation {
 public:
-    Rotated(const Shape& shape, const float& a) 
-      : Transformation(shape) {angle = a;};
+    Rotated(const Shape& shape, const Axis& ax, const float& a) 
+      : Transformation(shape) {axis = ax, angle = a;};
     float angle;
+    Axis axis;
 private:
     AABB getBounds_impl() const override;
     Shape clone_impl() const override;

@@ -14,6 +14,7 @@ struct VoxelSlice {
 
     VoxelSlice(uint32_t res_x, uint32_t res_y)
         : data(res_y, std::vector<bool>(res_x)) {}
+
 };
 
 class VoxelGrid final : public Shape {
@@ -55,3 +56,4 @@ std::ostream& operator<<(std::ostream& ostream, const VoxelSlice& slice);
 
 /// append a string representation of the voxel grid to the stream (e.g. VoxelGrid vg; std::cout << vg;)
 std::ostream& operator<<(std::ostream& ostream, const VoxelGrid& vg);
+
