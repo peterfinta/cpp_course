@@ -93,5 +93,5 @@ AABB Rotated::getBounds_impl() const {
             newMax.y = std::abs(cos*oldMax.y) + std::abs(sin*oldMax.x);
             break;
     }
-    return AABB{newMin, newMax};
+    return AABB{newMin * Point3D{-1.0f}, newMax};
 }
