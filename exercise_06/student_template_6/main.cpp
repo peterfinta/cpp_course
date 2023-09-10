@@ -36,9 +36,29 @@ int main() {
     std::cout << NotSphere.isInside(point_1) << ", " << NotSphere.isInside(point_2) << std::endl;
     */
 
+    //std::cout << Cube{}.translated(1.0f).rotated(Axis::Z, float(0.5*3.14159265358979323846)).getBounds().min.x << std::endl;
+    //std::cout << Cube{}.translated(1.0f).scaled(2.0f).rotated(Axis::Z, float(3.14159265358979323846)).getBounds().max.x << std::endl;
+    
+    float piHalf = float(0.5*3.14159265358979323846);
+    float pi = float(3.14159265358979323846);
+
+    std::cout << "Cube{} " << Cube{}.getBounds() << std::endl; 
+    std::cout << "Empty{} " << Empty{}.getBounds() << std::endl; 
+
+    //std::cout << "Cube{} (" << Cube{}.getBounds().min.x << ", " << Cube{}.getBounds().min.y << ") "; 
+    //std::cout << "(" << Cube{}.getBounds().max.x << ", " << Cube{}.getBounds().max.y << ") " << std::endl; 
+
+    //std::cout << "Cube{}.translated(1.0f) (" << Cube{}.translated(1.0f).getBounds().min.x << ", " << Cube{}.translated(1.0f).getBounds().min.y << ") "; 
+    //std::cout << "(" << Cube{}.translated(1.0f).getBounds().max.x << ", " << Cube{}.translated(1.0f).getBounds().max.y << ") " << std::endl; 
+
+    //std::cout << "Cube{}.rotated(Axis::Z, piHalf) (" << Cube{}.rotated(Axis::Z, piHalf).getBounds().min.x << ", " << Cube{}.rotated(Axis::Z, piHalf).getBounds().min.y << ") "; 
+    //std::cout << "(" << Cube{}.rotated(Axis::Z, piHalf).getBounds().max.x << ", " << Cube{}.rotated(Axis::Z, piHalf).getBounds().max.y << ") " << std::endl; 
+
+    std::cout << "Cube{}.translated(1.0f).rotated(Axis::Z, piHalf) (" << Cube{}.translated(1.0f).rotated(Axis::Z, piHalf).getBounds().min.x << ", " << Cube{}.translated(1.0f).rotated(Axis::Z, piHalf).getBounds().min.y << ") "; 
+    std::cout << "(" << Cube{}.translated(1.0f).rotated(Axis::Z, piHalf).getBounds().max.x << ", " << Cube{}.translated(1.0f).rotated(Axis::Z, piHalf).getBounds().max.y << ") " << std::endl; 
     // until implemented in task 6.4, this will throw an exception
     try {
-        VoxelGrid vg = your_shape();
+        VoxelGrid vg = Empty{};//your_shape();
         std::cout << vg;
         //Sphere sphere{};
         //Cube cube{};
