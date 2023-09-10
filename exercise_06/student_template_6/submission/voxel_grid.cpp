@@ -103,7 +103,7 @@ bool VoxelGrid::isInside_impl(const Point3D& p) const
     uint32_t x = static_cast<uint32_t>(pOffseted.x);
     uint32_t y = static_cast<uint32_t>(pOffseted.y);
     uint32_t z = static_cast<uint32_t>(pOffseted.z);
-    uint32_t size = x * y * z;
+    uint32_t size = x + y * res_y + z * res_x * res_y;
     if(size >= res_x * res_y * res_z) return false;
     return isSet(x, y, z);
 }
