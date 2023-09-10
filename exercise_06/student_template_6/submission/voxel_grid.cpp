@@ -100,9 +100,12 @@ bool VoxelGrid::isInside_impl(const Point3D& p) const
     Point3D resolution {float(res_x), float(res_y), float(res_z)};
     Point3D pOffseted = (p - bounds.min) * resolution / bounds.extents();
     if(!bounds.contains(p)) return false;
-    return isSet(static_cast<size_t>(pOffseted.x),
-                 static_cast<size_t>(pOffseted.y),
-                 static_cast<size_t>(pOffseted.z));
+    uint32_t x = static_cast<uint32_t>(pOffseted.x);
+    uint32_t y = static_cast<uint32_t>(pOffseted.y);
+    uint32_t z = static_cast<uint32_t>(pOffseted.z);
+    uint32_t size = x * y * z;
+    if(size >= res_x * res_y * res_z) return false;
+    return isSet(x, y, z);
 }
 
 bool VoxelGrid::isSet(uint32_t x, uint32_t y, uint32_t z) const
