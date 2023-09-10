@@ -73,7 +73,7 @@ bool Empty::isInside_impl(const Point3D&) const {
 
 AABB Empty::getBounds_impl() const
 {
-    return AABB{0.0f, 0.0f};
+    return AABB{};
 }
 
 Shape Cube::clone_impl() const

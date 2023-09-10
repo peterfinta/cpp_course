@@ -14,14 +14,26 @@ VoxelGrid::VoxelGrid(const Shape& shape)
     //(void) shape; // silence unused parameter warning
     AABB shapeBounds = shape.getBounds();
     bounds = shapeBounds;
-    if( !std::isfinite(shapeBounds.extents().x)
-     || !std::isfinite(shapeBounds.extents().y)
-     || !std::isfinite(shapeBounds.extents().z)) 
-        throw std::logic_error(
-            "Infinitly large bounding box can not be voxelized!");
-    res_x = static_cast<unsigned>(shapeBounds.extents().x) * level_of_detail;
-    res_y = static_cast<unsigned>(shapeBounds.extents().y) * level_of_detail;
-    res_z = static_cast<unsigned>(shapeBounds.extents().z) * level_of_detail;
+    //if( !std::isfinite(shapeBounds.extents().x)
+    // || !std::isfinite(shapeBounds.extents().y)
+    // || !std::isfinite(shapeBounds.extents().z)) 
+    //    throw std::logic_error(
+    //        "Infinitly large bounding box can not be voxelized!");
+    if(!std::isfinite(shapeBounds.extents().x))
+      res_x = 1;
+    else
+      res_x = static_cast<unsigned>(shapeBounds.extents().x) * level_of_detail;
+
+    if(!std::isfinite(shapeBounds.extents().y))
+      res_y = 1;
+    else
+      res_y = static_cast<unsigned>(shapeBounds.extents().y) * level_of_detail;
+
+    if(!std::isfinite(shapeBounds.extents().z))
+      res_z = 1;
+    else
+      res_z = static_cast<unsigned>(shapeBounds.extents().z) * level_of_detail;
+
     if(res_x == 0) res_x = 1;
     if(res_y == 0) res_y = 1;
     if(res_z == 0) res_z = 1;
@@ -120,8 +132,8 @@ Point3D VoxelGrid::voxelCenter(uint32_t x, uint32_t y, uint32_t z) const
 
 std::ostream& operator<<(std::ostream& ostream, const VoxelSlice& slice)
 {
-    unsigned res_y = slice.data.size();
-    unsigned res_x = slice.data.at(0).size();
+    unsigned res_y = static_cast<unsigned>(slice.data.size());
+    unsigned res_x = static_cast<unsigned>(slice.data.at(0).size());
     for(unsigned y = 0; y < res_y; y++)
     {
       for(unsigned x = 0; x < res_x; x++)
