@@ -11,7 +11,7 @@
 
 Shape your_shape(); // implemented in your_shape.cpp
 
-int main() {
+int main(int argc, char *argv[]) {
     // My Test    
     /*
     Sphere sphere{};
@@ -38,28 +38,24 @@ int main() {
 
     //std::cout << Cube{}.translated(1.0f).rotated(Axis::Z, float(0.5*3.14159265358979323846)).getBounds().min.x << std::endl;
     //std::cout << Cube{}.translated(1.0f).scaled(2.0f).rotated(Axis::Z, float(3.14159265358979323846)).getBounds().max.x << std::endl;
-    
-    float piHalf = float(0.25*3.14159265358979323846);
+
+    /* ENTERPRISE NCC-1701 */
     float pi = float(3.14159265358979323846);
+    //Shape viewBox = Cube{}.scaled(Point3D{2.0f, 1.2f, 2.0f}) - Cube{}.scaled(Point3D{2.0f, 2.0f, 2.0f});
+    //Shape saucer1 = Cylinder{}.scaled(Point3D{1.0f, 1.0f, 0.1f}).translated(Point3D{0.0f, 1.0f, 0.0f});
+    //Shape saucer2 = Sphere{}.scaled(Point3D{0.3f, 0.3f, 0.2f}).translated(Point3D{0.0f, 1.0f, 0.0f});
+    //Shape hull    = Cylinder{}.scaled(Point3D{0.3f, 0.3f, 0.8f}).rotated(Axis::X, 0.5f * pi).translated(Point3D{0.0f, -0.8f, -1.0f});
+    //Shape neck    = 
+    //Shape ship    = viewBox + saucer1 + saucer2 + hull;
+    //std::cout << ship;
+    
+    float fraction;
+    sscanf(argv[1], "%f", &fraction);
+    std::cout << Cube{}.scaled(Point3D{2.0f, 1.0f, 1.0f}).rotated(Axis::Z, fraction * pi);
 
-    std::cout << "Cube{} " << Cube{}.getBounds() << std::endl; 
-    std::cout << "Empty{} " << Empty{}.getBounds() << std::endl; 
-
-    //std::cout << "Cube{} (" << Cube{}.getBounds().min.x << ", " << Cube{}.getBounds().min.y << ") "; 
-    //std::cout << "(" << Cube{}.getBounds().max.x << ", " << Cube{}.getBounds().max.y << ") " << std::endl; 
-
-    //std::cout << "Cube{}.translated(1.0f) (" << Cube{}.translated(1.0f).getBounds().min.x << ", " << Cube{}.translated(1.0f).getBounds().min.y << ") "; 
-    //std::cout << "(" << Cube{}.translated(1.0f).getBounds().max.x << ", " << Cube{}.translated(1.0f).getBounds().max.y << ") " << std::endl; 
-
-    //std::cout << "Cube{}.rotated(Axis::Z, piHalf) (" << Cube{}.rotated(Axis::Z, piHalf).getBounds().min.x << ", " << Cube{}.rotated(Axis::Z, piHalf).getBounds().min.y << ") "; 
-    //std::cout << "(" << Cube{}.rotated(Axis::Z, piHalf).getBounds().max.x << ", " << Cube{}.rotated(Axis::Z, piHalf).getBounds().max.y << ") " << std::endl; 
-
-    std::cout << "Cube{}.translated(1.0f).rotated(Axis::Z, piHalf) (" << Cube{}.translated(1.0f).rotated(Axis::Z, piHalf).getBounds().min.x << ", " << Cube{}.translated(1.0f).rotated(Axis::Z, piHalf).getBounds().min.y << ") "; 
-    std::cout << "(" << Cube{}.translated(1.0f).rotated(Axis::Z, piHalf).getBounds().max.x << ", " << Cube{}.translated(1.0f).rotated(Axis::Z, piHalf).getBounds().max.y << ") " << std::endl; 
-    // until implemented in task 6.4, this will throw an exception
     try {
-        VoxelGrid vg = your_shape();
-        std::cout << vg;
+        //VoxelGrid vg = your_shape();
+        //std::cout << vg;
         //Sphere sphere{};
         //Cube cube{};
         //Octahedron octa{};
