@@ -29,5 +29,5 @@ Point median(const std::vector<Point> &points) {
   if(size % 2) return Point(xSorted.at(size/2).x,
                             ySorted.at(size/2).y);
   else return Point((xSorted.at(size/2).x + xSorted.at(size/2 - 1).x) / 2.0f,
-                    (xSorted.at(size/2).y + xSorted.at(size/2 - 1).y) / 2.0f);
+                    (ySorted.at(size/2).y + ySorted.at(size/2 - 1).y) / 2.0f);
 }
