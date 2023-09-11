@@ -53,5 +53,15 @@ int main() {
   }
   std::cout << "\n";
 
+  for (std::cout << "range(10, -10): "; int value : range(10, -10)) {
+    std::cout << value << " ";
+  }
+  std::cout << "\n";
+
+  for (std::cout << "range(1, 1): "; int value : range(1, 1)) {
+    std::cout << value << " ";
+  }
+  std::cout << "\n";
+
   return EXIT_SUCCESS;
 }
