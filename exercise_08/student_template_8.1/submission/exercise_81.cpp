@@ -29,9 +29,10 @@ float MAE(const std::vector<float>& ground_truth,
 }
 
 std::vector<int> range(int start, int end) {
-  std::vector<int> tmpVec(end - start);
+  std::vector<int> tmpVec(std::abs(end - start));
   std::generate(tmpVec.begin(), tmpVec.end(),
-      [start]() mutable {return start++;});
+      [start]() mutable {if(end >= start) return start++; 
+                         else return start--});
   return tmpVec;
 }
 
