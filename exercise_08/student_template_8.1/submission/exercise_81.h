@@ -24,6 +24,17 @@ float MSE(const std::vector<float>& ground_truth,
 float MAE(const std::vector<float>& ground_truth,
           const std::vector<float>& prediction);
 
+template <typename T, typename U> 
+std::vector<std::pair<T, U>> zip 
+    (const std::vector<T> a, const std::vector<U> b)
+{ 
+    std::vector<std::pair<T, U>> output(a.size());
+    std::transform(a.begin(), a.end(),
+                   b.begin(),
+                   output.begin(),
+                   [](T a, U b){return std::make_pair(a, b);});
+    return output;
+}
 
 // TODO 8.1.c: implement zip here!
 
