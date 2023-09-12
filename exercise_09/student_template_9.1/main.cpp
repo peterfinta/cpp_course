@@ -32,7 +32,7 @@ int main() {
   std::cout << "Books: Start stock: " << books_init
             << "\tSold: " << shop.sold_books
             << "\tLeft on stock: " << shop.books_on_stock << "\n";
-  std::cout << "Toys: Start stock: " << toys_init
+  std::cout << "Toys:  Start stock: " << toys_init
             << "\tSold: " << shop.sold_toys
             << "\tLeft on stock: " << shop.toys_on_stock << "\n";
   return EXIT_SUCCESS;
