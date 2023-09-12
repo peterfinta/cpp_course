@@ -10,6 +10,7 @@
 #include <random>
 #include <set>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -90,8 +91,11 @@ std::vector<int> hist_critical(int N, int bins) {
   Timer t("Histogram calculation using a critical section.");
 #pragma omp parallel for
   for (int i = 0; i < N; ++i) {
+#pragma omp critical (histogram_acces)
+    {
     int bin = sample_from_normal_distribution();
     ++hist[static_cast<size_t>(bin)];
+    }
   }
   t.stop();
   return hist;
@@ -104,11 +108,19 @@ std::vector<int> hist_critical(int N, int bins) {
 std::vector<int> hist_element_lock(int N, int bins) {
   std::vector<int> hist(static_cast<size_t>(bins), 0);
 
+  std::vector<omp_lock_t> binLock(static_cast<size_t>(bins));
+  for(int i = 0; i < bins; ++i)
+  {
+    omp_init_lock(&binLock[i]);
+  }
+
   Timer t("Histogram with bin-wise locks");
 #pragma omp parallel for
   for (int i = 0; i < N; ++i) {
     int bin = sample_from_normal_distribution();
+    omp_set_lock(&binLock[static_cast<size_t>(bin)]);
     ++hist[static_cast<size_t>(bin)];
+    omp_unset_lock(&binLock[static_cast<size_t>(bin)]);
   }
   t.stop();
 
@@ -134,6 +146,13 @@ std::vector<int> hist_lockfree(int N, int bins) {
 #pragma omp for
     for (int i = 0; i < N; ++i) {
       ++hist_large[static_cast<size_t>(offset + sample_from_normal_distribution())];
+    }
+#pragma omp for
+    for(int i = 0; i < bins; ++i)
+    {
+      for(int j = 0; j < thread_count; ++j)
+        hist[static_cast<size_t>(i)] 
+            += hist_large[static_cast<size_t>(j*bins + i)];
     }
     // find a lock-free way to merge bins (hint: iterate over bins in the outer
     // loop and aggregate in the inner loop
