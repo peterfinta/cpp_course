@@ -31,7 +31,7 @@ void slow_producer() {
 	{
 		std::scoped_lock<std::mutex> ul(slow_mutex);
 		slow_queue.push(slow_generator() % 100 + 1);
-    std::cout << "+ Slow Data produced, exec_count: " << execution_count << std::endl;
+    //std::cout << "+ Slow Data produced, exec_count: " << execution_count << std::endl;
 	} // end of scope releases lock
     execution_count++;
     // TODO: tell others that a new value is available in the queue
@@ -46,7 +46,7 @@ void fast_producer() {
 	{
 		std::scoped_lock<std::mutex> ul(fast_mutex);
 		fast_queue.push(fast_generator() % 100 + 1);
-    std::cout << "+ Fast Data produced, exec_count: " << execution_count << std::endl;
+    //std::cout << "+ Fast Data produced, exec_count: " << execution_count << std::endl;
 	} // end of scope releases lock
     execution_count++;
     // TODO: tell others that a new value is available in the queue
@@ -64,7 +64,7 @@ void consumer(std::map<unsigned long, size_t> *diff_count) {
   while(slow_queue.empty()) slow_cond.wait(slow_lk);
 	long unsigned int slow_data = slow_queue.front();
 	slow_queue.pop();
-  std::cout << "- Fast Data consumed, exec_count: " << execution_count << std::endl;
+  //std::cout << "- Fast Data consumed, exec_count: " << execution_count << std::endl;
   slow_lk.unlock();
 	// TODO student: don't forget to unlock
 
@@ -73,7 +73,7 @@ void consumer(std::map<unsigned long, size_t> *diff_count) {
   while(fast_queue.empty()) fast_cond.wait(fast_lk);
 	long unsigned int fast_data = fast_queue.front();
 	fast_queue.pop();
-  std::cout << "- Fast Data consumed, exec_count: " << execution_count << std::endl;
+  //std::cout << "- Fast Data consumed, exec_count: " << execution_count << std::endl;
   fast_lk.unlock();
 	// TODO student: don't forget to unlock
 
