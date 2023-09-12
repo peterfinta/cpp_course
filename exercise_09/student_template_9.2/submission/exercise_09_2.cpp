@@ -31,9 +31,11 @@ void slow_producer() {
 	{
 		std::scoped_lock<std::mutex> ul(slow_mutex);
 		slow_queue.push(slow_generator() % 100 + 1);
+    std::cout << "+ Slow Data produced, exec_count: " << execution_count << std::endl;
 	} // end of scope releases lock
     execution_count++;
     // TODO: tell others that a new value is available in the queue
+    slow_cond.notify_one();
     std::this_thread::sleep_for(std::chrono::milliseconds(delay_generator() % 200));
   }
 }
@@ -44,9 +46,11 @@ void fast_producer() {
 	{
 		std::scoped_lock<std::mutex> ul(fast_mutex);
 		fast_queue.push(fast_generator() % 100 + 1);
+    std::cout << "+ Fast Data produced, exec_count: " << execution_count << std::endl;
 	} // end of scope releases lock
     execution_count++;
     // TODO: tell others that a new value is available in the queue
+    fast_cond.notify_one();
     std::this_thread::sleep_for(std::chrono::milliseconds(delay_generator() % 20));
   }
 }
@@ -56,13 +60,21 @@ void consumer(std::map<unsigned long, size_t> *diff_count) {
   while (execution_count < 20) {
 	// TODO student: Define a unique_lock and use one of the condition variables to wait until condition (non-empty queue) is fullfiled.
 	// Note: the simpler scoped_lock doesn't work here as the condition variable needs to lock/unlock the mutex while waiting.
+  std::unique_lock<std::mutex> slow_lk(slow_mutex);
+  while(slow_queue.empty()) slow_cond.wait(slow_lk);
 	long unsigned int slow_data = slow_queue.front();
 	slow_queue.pop();
+  std::cout << "- Fast Data consumed, exec_count: " << execution_count << std::endl;
+  slow_lk.unlock();
 	// TODO student: don't forget to unlock
 
 	// TODO: similar for the fast queue
+  std::unique_lock<std::mutex> fast_lk(fast_mutex);
+  while(fast_queue.empty()) fast_cond.wait(fast_lk);
 	long unsigned int fast_data = fast_queue.front();
 	fast_queue.pop();
+  std::cout << "- Fast Data consumed, exec_count: " << execution_count << std::endl;
+  fast_lk.unlock();
 	// TODO student: don't forget to unlock
 
     // count how often differences between a and b occur
