@@ -35,7 +35,6 @@ std::mutex toy_mutex;
  */
 void sell_book(Shop &shop) {
   if (shop.books_on_stock <= 0) {
-    book_mutex.unlock();
     throw std::runtime_error("Books are out of stock!");
   }
   ++shop.sold_books;
@@ -51,7 +50,6 @@ void sell_book(Shop &shop) {
  */
 void sell_toy(Shop &shop) {
   if (shop.toys_on_stock <= 0) {
-    toy_mutex.unlock();
     throw std::runtime_error("Toys are out of stock!");
   }
   ++shop.sold_toys;
