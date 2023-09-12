@@ -25,23 +25,23 @@ vector<double> get_vector_of_random_numbers() {
 }
 
 vector<double> sequential_sort(vector<double> &data) {
-  // TODO STUDENT
+  std::sort(data.begin(), data.end());
   return data;
 }
 
 vector<double> parallel_sort(vector<double> &data) {
-  // TODO STUDEN
+  std::sort(execution::par, data.begin(), data.end());
   return data;
 }
 
 vector<double> sequential_transform(vector<double> &data,
                                     double (*function)(double)) {
-  // TODO STUDENT
+  std::transform(data.begin(), data.end(), data.begin(), function);
   return data;
 }
 
 vector<double> parallel_transform(vector<double> &data,
                                     double (*function)(double)) {
-  // TODO STUDENT
+  std::transform(execution::par, data.begin(), data.end(), data.begin(), function);
     return data;
 }
