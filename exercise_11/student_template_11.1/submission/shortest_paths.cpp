@@ -23,6 +23,7 @@ std::vector<size_t> ShortestPaths::compute_shortest_path(size_t from, size_t to)
     size_t num_visited = 0;
 
     std::vector<float>  dist(size());
+    std::vector<float>  distHeur(size());
     std::vector<size_t> prev(size());
     std::vector<size_t> queue(size());
 
@@ -30,6 +31,11 @@ std::vector<size_t> ShortestPaths::compute_shortest_path(size_t from, size_t to)
     {
       dist[i]  = inf;
       prev[i]  = undef;
+      distHeur[i] 
+        = std::sqrt((adjacency_matrix[i].pos_x - adjacency_matrix[to].pos_x)
+                   *(adjacency_matrix[i].pos_x - adjacency_matrix[to].pos_x) 
+                   +(adjacency_matrix[i].pos_y - adjacency_matrix[to].pos_y) 
+                   *(adjacency_matrix[i].pos_y - adjacency_matrix[to].pos_y));
       queue[i] = i;
     }
     dist[from] = 0.0f;
@@ -42,7 +48,7 @@ std::vector<size_t> ShortestPaths::compute_shortest_path(size_t from, size_t to)
       {
         if(queue[i] != undef)
         {
-          if(dist[i] < nextDist) 
+          if(dist[i] + distHeur[i] < nextDist + distHeur[nextId]) 
           {
             nextId = i;
             nextDist = dist[i];
