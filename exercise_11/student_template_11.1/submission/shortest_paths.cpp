@@ -15,75 +15,73 @@ size_t ShortestPaths::getNodeIdByName(const std::string& name) const {
 
 std::vector<size_t> ShortestPaths::compute_shortest_path(size_t from, size_t to) const
 {
-    std::cout << "Jallo" << std::endl;
     /// your result path
     std::vector<size_t> result;
-    result.push_back(from);
-    result.push_back(to);
-    //float  inf   = std::numeric_limits<float>::max();
-    //size_t undef = std::numeric_limits<size_t>::max();
+    float  inf   = std::numeric_limits<float>::max();
+    size_t undef = std::numeric_limits<size_t>::max();
     /// increment this for every node that you pop from the queue
     size_t num_visited = 0;
 
-    //std::vector<float>  dist(size());
-    //std::vector<size_t> prev(size());
-    //std::vector<size_t> queue(size());
+    std::vector<float>  dist(size());
+    std::vector<size_t> prev(size());
+    std::vector<size_t> queue(size());
 
-    //for(size_t i = 0; i < size(); i++)
-    //{
-    //  dist[i]  = inf;
-    //  prev[i]  = undef;
-    //  queue[i] = i;
-    //}
-    //dist[from] = 0.0f;
+    for(size_t i = 0; i < size(); i++)
+    {
+      dist[i]  = inf;
+      prev[i]  = undef;
+      queue[i] = i;
+    }
+    dist[from] = 0.0f;
 
+    while(num_visited != size())
+    {
+      size_t nextId = from;
+      float  nextDist = inf;
+      for(size_t i = 0; i < size(); i++)
+      {
+        if(queue[i] != undef)
+        {
+          if(dist[i] < nextDist) 
+          {
+            nextId = i;
+            nextDist = dist[i];
+          }
+        }
+      }
+      num_visited++;
+      queue[nextId] = undef;
+      if(nextId == to) break;
 
-    //while(num_visited != size())
-    //{
-    //  size_t nextId = undef;
-    //  float  nextDist = inf;
-    //  for(size_t i = 0; i < size(); i++)
-    //  {
-    //    if(queue[i] != undef)
-    //    {
-    //      if(dist[i] < nextDist) 
-    //      {
-    //        nextId = i;
-    //        nextDist = dist[i];
-    //      }
-    //    }
-    //  }
-    //  num_visited++;
-    //  queue[nextId] = undef;
-    //  if(nextId == to) break;
+      nextDist = 0.0f;
+      for(size_t i = 0; i < size(); i++)
+      {
+        std::optional<float> maybe = adjacency_matrix[nextId][i];
+        if(maybe && queue[i] != undef)
+        {
+          nextDist = dist[nextId] + maybe.value();
+          if(nextDist < dist[i]) 
+          {
+            dist[i] = nextDist;
+            prev[i] = nextId;
+          }
+        }
+      }
+    }
 
-    //  nextDist = 0.0f;
-    //  for(size_t i = 0; i < size(); i++)
-    //  {
-    //    std::optional<float> maybe = adjacency_matrix[nextId][i];
-    //    if(maybe && queue[i] != undef)
-    //    {
-    //      nextDist = dist[nextId] + maybe.value();
-    //      if(nextDist < dist[nextId]) 
-    //      {
-    //        dist[i] = nextDist;
-    //        prev[i] = nextId;
-    //      }
-    //    }
-    //  }
-    //}
-
-    //size_t nextId = to;
-    //if(prev[nextId] != undef || nextId == from)
-    //{
-    //  while(prev[nextId] != undef)
-    //  {
-    //    result.push_back(nextId);
-    //    nextId = prev[nextId];
-    //  }
-    //}
+    size_t nextId = to;
+    if(prev[nextId] != undef || nextId == from)
+    {
+      while(nextId != undef)
+      {
+        result.push_back(nextId);
+        nextId = prev[nextId];
+      }
+    }
+    //result.push_back(from);
 
     std::cout << "Nodes visited: " << num_visited << std::endl;
+    std::reverse(result.begin(), result.end());
 
     return result;
 }

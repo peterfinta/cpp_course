@@ -21,7 +21,7 @@ int main() {
     // load cities
     {
         // data taken from https://simplemaps.com/data/de-cities
-        std::ifstream city_data("../de.csv", std::ifstream::in);
+        std::ifstream city_data("./de.csv", std::ifstream::in);
         char buffer[1024];
 
         // determine number of lines in the file
